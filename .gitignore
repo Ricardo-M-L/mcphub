@@ -1,0 +1,30 @@
+# Binaries
+bin/
+dist/
+*.exe
+
+# Go
+vendor/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Web
+web/node_modules/
+web/.next/
+web/out/
+
+# Local config
+.env
+.env.local
+
+# Test
+coverage.out
+mcphub
