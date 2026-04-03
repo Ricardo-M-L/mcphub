@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/mcphub/mcphub/internal/registry"
+	"github.com/Ricardo-M-L/mcphub/internal/registry"
 	_ "modernc.org/sqlite"
 )
 

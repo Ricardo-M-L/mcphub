@@ -1,6 +1,6 @@
 package main
 
-import "github.com/mcphub/mcphub/internal/cli"
+import "github.com/Ricardo-M-L/mcphub/internal/cli"
 
 func main() {
 	cli.Execute()

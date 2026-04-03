@@ -4,8 +4,8 @@ import (
 	"log"
 	"time"
 
-	"github.com/mcphub/mcphub/internal/registry"
-	"github.com/mcphub/mcphub/server/db"
+	"github.com/Ricardo-M-L/mcphub/internal/registry"
+	"github.com/Ricardo-M-L/mcphub/server/db"
 )
 
 // Crawler syncs MCP servers from the upstream registry into the local database.

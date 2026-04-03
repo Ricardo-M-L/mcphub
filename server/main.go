@@ -10,9 +10,9 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/mcphub/mcphub/server/crawler"
-	"github.com/mcphub/mcphub/server/db"
-	"github.com/mcphub/mcphub/server/handler"
+	"github.com/Ricardo-M-L/mcphub/server/crawler"
+	"github.com/Ricardo-M-L/mcphub/server/db"
+	"github.com/Ricardo-M-L/mcphub/server/handler"
 )
 
 func main() {

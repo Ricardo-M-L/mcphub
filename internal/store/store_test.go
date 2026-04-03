@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/mcphub/mcphub/internal/registry"
+	"github.com/Ricardo-M-L/mcphub/internal/registry"
 )
 
 func TestLockfileRoundTrip(t *testing.T) {

@@ -3,9 +3,9 @@ package cli
 import (
 	"fmt"
 
-	"github.com/mcphub/mcphub/internal/config"
-	"github.com/mcphub/mcphub/internal/store"
-	"github.com/mcphub/mcphub/internal/ui"
+	"github.com/Ricardo-M-L/mcphub/internal/config"
+	"github.com/Ricardo-M-L/mcphub/internal/store"
+	"github.com/Ricardo-M-L/mcphub/internal/ui"
 	"github.com/spf13/cobra"
 )
 

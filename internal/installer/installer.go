@@ -3,8 +3,8 @@ package installer
 import (
 	"fmt"
 
-	"github.com/mcphub/mcphub/internal/config"
-	"github.com/mcphub/mcphub/internal/registry"
+	"github.com/Ricardo-M-L/mcphub/internal/config"
+	"github.com/Ricardo-M-L/mcphub/internal/registry"
 )
 
 // Result holds the output of an installation.

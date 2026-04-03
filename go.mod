@@ -1,4 +1,4 @@
-module github.com/mcphub/mcphub
+module github.com/Ricardo-M-L/mcphub
 
 go 1.25.0
 

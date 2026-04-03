@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/mcphub/mcphub/server/db"
+	"github.com/Ricardo-M-L/mcphub/server/db"
 )
 
 // SearchHandler handles GET /api/v1/servers

@@ -1,8 +1,8 @@
 package installer
 
 import (
-	"github.com/mcphub/mcphub/internal/config"
-	"github.com/mcphub/mcphub/internal/registry"
+	"github.com/Ricardo-M-L/mcphub/internal/config"
+	"github.com/Ricardo-M-L/mcphub/internal/registry"
 )
 
 // RemoteInstaller handles remotely-hosted MCP servers.

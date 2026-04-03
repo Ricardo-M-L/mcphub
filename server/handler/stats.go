@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/mcphub/mcphub/server/db"
+	"github.com/Ricardo-M-L/mcphub/server/db"
 )
 
 // StatsHandler handles GET /api/v1/stats

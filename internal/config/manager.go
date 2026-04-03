@@ -6,7 +6,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/mcphub/mcphub/internal/platform"
+	"github.com/Ricardo-M-L/mcphub/internal/platform"
 )
 
 // ClientConfig provides read/write access to an MCP client's configuration.

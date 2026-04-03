@@ -29,7 +29,7 @@ curl -fsSL https://mcphub.dev/install.sh | sh
 brew install mcphub/tap/mcphub
 
 # From source
-go install github.com/mcphub/mcphub/cmd/mcphub@latest
+go install github.com/Ricardo-M-L/mcphub/cmd/mcphub@latest
 ```
 
 ### Usage

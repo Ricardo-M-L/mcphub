@@ -7,11 +7,11 @@ import (
 	"strings"
 	"time"
 
-	"github.com/mcphub/mcphub/internal/config"
-	"github.com/mcphub/mcphub/internal/installer"
-	"github.com/mcphub/mcphub/internal/registry"
-	"github.com/mcphub/mcphub/internal/store"
-	"github.com/mcphub/mcphub/internal/ui"
+	"github.com/Ricardo-M-L/mcphub/internal/config"
+	"github.com/Ricardo-M-L/mcphub/internal/installer"
+	"github.com/Ricardo-M-L/mcphub/internal/registry"
+	"github.com/Ricardo-M-L/mcphub/internal/store"
+	"github.com/Ricardo-M-L/mcphub/internal/ui"
 	"github.com/spf13/cobra"
 )
 

@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"os/exec"
 
-	"github.com/mcphub/mcphub/internal/config"
-	"github.com/mcphub/mcphub/internal/registry"
+	"github.com/Ricardo-M-L/mcphub/internal/config"
+	"github.com/Ricardo-M-L/mcphub/internal/registry"
 )
 
 // NpmInstaller handles npm/npx-based MCP servers.

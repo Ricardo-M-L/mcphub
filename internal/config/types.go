@@ -1,6 +1,6 @@
 package config
 
-import "github.com/mcphub/mcphub/internal/registry"
+import "github.com/Ricardo-M-L/mcphub/internal/registry"
 
 // MCPServerEntry is the common MCP server config format used by Claude Desktop and Cursor.
 type MCPServerEntry struct {

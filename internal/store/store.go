@@ -6,8 +6,8 @@ import (
 	"os"
 	"time"
 
-	"github.com/mcphub/mcphub/internal/platform"
-	"github.com/mcphub/mcphub/internal/registry"
+	"github.com/Ricardo-M-L/mcphub/internal/platform"
+	"github.com/Ricardo-M-L/mcphub/internal/registry"
 )
 
 // InstalledPackage tracks a locally installed MCP server.

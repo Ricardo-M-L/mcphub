@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/mcphub/mcphub/internal/registry"
-	"github.com/mcphub/mcphub/internal/ui"
+	"github.com/Ricardo-M-L/mcphub/internal/registry"
+	"github.com/Ricardo-M-L/mcphub/internal/ui"
 	"github.com/spf13/cobra"
 )
 
