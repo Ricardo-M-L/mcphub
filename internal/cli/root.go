@@ -27,6 +27,8 @@ func init() {
 	rootCmd.AddCommand(listCmd)
 	rootCmd.AddCommand(removeCmd)
 	rootCmd.AddCommand(infoCmd)
+	rootCmd.AddCommand(publishCmd)
+	rootCmd.AddCommand(initCmd)
 	rootCmd.AddCommand(versionCmd)
 }
 

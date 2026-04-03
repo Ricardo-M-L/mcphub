@@ -38,8 +38,16 @@ func main() {
 
 	// API routes
 	mux.HandleFunc("/api/v1/servers", handler.SearchHandler(database))
-	mux.HandleFunc("/api/v1/servers/", handler.ServerHandler(database))
 	mux.HandleFunc("/api/v1/stats", handler.StatsHandler(database))
+	// Order matters: score route must come before the catch-all server route
+	mux.HandleFunc("/api/v1/servers/", func(w http.ResponseWriter, r *http.Request) {
+		path := r.URL.Path
+		if strings.HasSuffix(path, "/score") {
+			handler.ScoreHandler(database)(w, r)
+			return
+		}
+		handler.ServerHandler(database)(w, r)
+	})
 
 	// Health check
 	mux.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
