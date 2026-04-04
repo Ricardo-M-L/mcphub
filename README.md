@@ -22,14 +22,21 @@ mcphub install @anthropic/server-filesystem
 ### Install mcphub
 
 ```bash
-# macOS / Linux
-curl -fsSL https://mcphub.dev/install.sh | sh
+# macOS / Linux (one-line install)
+curl -fsSL https://raw.githubusercontent.com/Ricardo-M-L/mcphub/master/install.sh | sh
 
 # Homebrew
-brew install mcphub/tap/mcphub
+brew tap Ricardo-M-L/mcphub
+brew install mcphub
 
-# From source
+# npm / npx
+npm install -g mcphub
+
+# Go
 go install github.com/Ricardo-M-L/mcphub/cmd/mcphub@latest
+
+# Docker
+docker run --rm ghcr.io/ricardo-m-l/mcphub search filesystem
 ```
 
 ### Usage

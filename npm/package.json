@@ -1,0 +1,26 @@
+{
+  "name": "mcphub",
+  "version": "0.1.0",
+  "description": "The package manager for Model Context Protocol (MCP) servers",
+  "bin": {
+    "mcphub": "./bin/run.js"
+  },
+  "scripts": {
+    "postinstall": "node ./bin/install.js"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "package-manager",
+    "ai",
+    "claude",
+    "cursor"
+  ],
+  "author": "Ricardo-M-L",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Ricardo-M-L/mcphub.git"
+  },
+  "homepage": "https://github.com/Ricardo-M-L/mcphub"
+}
