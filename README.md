@@ -125,16 +125,77 @@ This removes the server from all configured MCP clients and the lockfile.
 
 ### Publish your own MCP server
 
-```bash
-# Create a manifest
-mcphub init
+If you've built an MCP server and want others to install it via mcphub, follow these steps:
 
-# Validate
+#### 1. Publish your MCP server to npm
+
+```bash
+cd my-mcp-server
+npm publish --access public
+```
+
+After publishing, anyone can run your server with `npx @your-scope/my-mcp-server`.
+
+#### 2. Create a mcphub manifest
+
+```bash
+mcphub init
+```
+
+This generates a `mcphub.json` file. Edit it with your server's info:
+
+```json
+{
+  "name": "your-org/my-mcp-server",
+  "version": "1.0.0",
+  "description": "What your MCP server does",
+  "runtime": {
+    "type": "npm",
+    "command": "npx",
+    "package": "@your-scope/my-mcp-server"
+  },
+  "transport": "stdio",
+  "environmentVariables": [
+    {
+      "name": "API_KEY",
+      "description": "Your API key for the service",
+      "required": true,
+      "secret": true
+    }
+  ]
+}
+```
+
+#### 3. Validate and publish
+
+```bash
+# Validate without publishing
 mcphub publish --dry-run
 
-# Publish
+# Publish to MCP Registry
 mcphub publish
 ```
+
+#### 4. Now anyone can install your server
+
+```bash
+# Search for it
+mcphub search my-mcp-server
+
+# Install (auto-configures Claude Desktop / Cursor)
+mcphub install your-org/my-mcp-server
+
+# Or add directly to Claude Code
+claude mcp add my-server npx @your-scope/my-mcp-server
+```
+
+#### Distribution options
+
+| Method | What you do | How users install | Best for |
+|--------|------------|-------------------|----------|
+| **npm package** | `npm publish` + `mcphub publish` | `mcphub install xxx` | Most common, recommended |
+| **Remote URL** | Deploy server + `mcphub publish` | `mcphub install xxx` (zero download) | Server-side MCP |
+| **Direct** | `npm publish` only | `claude mcp add xxx npx @scope/pkg` | Simple, no registry |
 
 ---
 
