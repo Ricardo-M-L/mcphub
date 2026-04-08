@@ -6,7 +6,15 @@ set -e
 
 REPO="Ricardo-M-L/mcphub"
 BINARY="mcphub"
-INSTALL_DIR="/usr/local/bin"
+MCP_BINARY="mcphub-mcp"
+
+# Prefer ~/.local/bin (no sudo needed), fallback to /usr/local/bin
+if [ -d "$HOME/.local/bin" ]; then
+    INSTALL_DIR="$HOME/.local/bin"
+else
+    mkdir -p "$HOME/.local/bin"
+    INSTALL_DIR="$HOME/.local/bin"
+fi
 
 # Detect OS and architecture
 OS=$(uname -s | tr '[:upper:]' '[:lower:]')
@@ -24,26 +32,34 @@ case "$OS" in
     *) echo "Unsupported OS: $OS"; exit 1 ;;
 esac
 
-ASSET="${BINARY}-${OS}-${ARCH}"
-echo "Downloading mcphub for ${OS}/${ARCH}..."
+echo "Installing mcphub for ${OS}/${ARCH}..."
 
-# Get latest release URL
-DOWNLOAD_URL="https://github.com/${REPO}/releases/latest/download/${ASSET}"
-
-# Download
+# Download CLI
+DOWNLOAD_URL="https://github.com/${REPO}/releases/latest/download/${BINARY}-${OS}-${ARCH}"
 TMPDIR=$(mktemp -d)
 curl -fsSL "$DOWNLOAD_URL" -o "$TMPDIR/$BINARY"
 chmod +x "$TMPDIR/$BINARY"
+mv "$TMPDIR/$BINARY" "$INSTALL_DIR/$BINARY"
 
-# Install
-if [ -w "$INSTALL_DIR" ]; then
-    mv "$TMPDIR/$BINARY" "$INSTALL_DIR/$BINARY"
-else
-    echo "Need sudo to install to $INSTALL_DIR"
-    sudo mv "$TMPDIR/$BINARY" "$INSTALL_DIR/$BINARY"
+# Download MCP server binary
+MCP_URL="https://github.com/${REPO}/releases/latest/download/${MCP_BINARY}-${OS}-${ARCH}"
+if curl -fsSL "$MCP_URL" -o "$TMPDIR/$MCP_BINARY" 2>/dev/null; then
+    chmod +x "$TMPDIR/$MCP_BINARY"
+    mv "$TMPDIR/$MCP_BINARY" "$INSTALL_DIR/$MCP_BINARY"
 fi
 
 rm -rf "$TMPDIR"
+
+# Check if INSTALL_DIR is in PATH
+case ":$PATH:" in
+    *":$INSTALL_DIR:"*) ;;
+    *)
+        echo ""
+        echo "Add this to your shell profile (~/.zshrc or ~/.bashrc):"
+        echo "  export PATH=\"$INSTALL_DIR:\$PATH\""
+        echo ""
+        ;;
+esac
 
 echo ""
 echo "mcphub installed successfully!"
@@ -51,4 +67,7 @@ echo ""
 echo "Get started:"
 echo "  mcphub search filesystem"
 echo "  mcphub install <server-name>"
+echo ""
+echo "Add to Claude Code:"
+echo "  claude mcp add mcphub mcphub-mcp"
 echo ""
