@@ -1,5 +1,5 @@
 {
-  "name": "mcphub",
+  "name": "@ricardo.m.lu/mcphub",
   "version": "0.1.0",
   "description": "The package manager for Model Context Protocol (MCP) servers",
   "bin": {
