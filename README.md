@@ -142,28 +142,28 @@ mcphub publish
 
 mcphub can run as an MCP server itself, so you can search and install MCP servers directly from your AI assistant.
 
-### Setup
-
-#### 1. Build the MCP server binary
+### Quick Setup (2 commands)
 
 ```bash
-cd mcphub
-go build -o bin/mcphub-mcp ./mcp
-```
-
-Or if you installed via Go:
-
-```bash
+# Install the MCP server binary
 go install github.com/Ricardo-M-L/mcphub/mcp@latest
-```
 
-#### 2. Configure your MCP client
-
-**Claude Code** (simplest - one command):
-
-```bash
+# Add to Claude Code
 claude mcp add mcphub mcphub-mcp
 ```
+
+That's it. Restart Claude Code and start chatting.
+
+### Alternative: Build from source
+
+```bash
+git clone https://github.com/Ricardo-M-L/mcphub.git
+cd mcphub
+go build -o bin/mcphub-mcp ./mcp
+claude mcp add mcphub /path/to/mcphub/bin/mcphub-mcp
+```
+
+### Other MCP clients
 
 Or manually add to `~/.claude/settings.json`:
 
