@@ -189,12 +189,39 @@ mcphub install your-org/my-mcp-server
 claude mcp add my-server npx @your-scope/my-mcp-server
 ```
 
+#### Supported transport types
+
+| Transport | How it works | User downloads? | Example |
+|-----------|-------------|-----------------|---------|
+| **stdio** | Local process via npx | Yes (npm package) | `npx @scope/my-server` |
+| **streamable-http** | Remote HTTP endpoint | No, just connects to URL | `https://api.example.com/mcp` |
+| **sse** | Server-Sent Events endpoint | No, just connects to URL | `https://api.example.com/sse` |
+
+For remote servers (streamable-http / sse), set your `mcphub.json` like this:
+
+```json
+{
+  "name": "your-org/my-remote-server",
+  "version": "1.0.0",
+  "description": "My remote MCP server",
+  "transport": "streamable-http",
+  "remoteUrl": "https://api.example.com/mcp"
+}
+```
+
+Users install the same way — mcphub auto-detects the transport type:
+
+```bash
+mcphub install your-org/my-remote-server
+# → Configures URL in Claude Desktop / Cursor, zero download
+```
+
 #### Distribution options
 
 | Method | What you do | How users install | Best for |
 |--------|------------|-------------------|----------|
-| **npm package** | `npm publish` + `mcphub publish` | `mcphub install xxx` | Most common, recommended |
-| **Remote URL** | Deploy server + `mcphub publish` | `mcphub install xxx` (zero download) | Server-side MCP |
+| **npm + stdio** | `npm publish` + `mcphub publish` | `mcphub install xxx` | CLI tools, local servers |
+| **Remote URL** | Deploy server + `mcphub publish` | `mcphub install xxx` (zero download) | API services, cloud MCP |
 | **Direct** | `npm publish` only | `claude mcp add xxx npx @scope/pkg` | Simple, no registry |
 
 ---
