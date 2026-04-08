@@ -159,7 +159,13 @@ go install github.com/Ricardo-M-L/mcphub/mcp@latest
 
 #### 2. Configure your MCP client
 
-**Claude Code** - Add to `~/.claude/settings.json`:
+**Claude Code** (simplest - one command):
+
+```bash
+claude mcp add mcphub mcphub-mcp
+```
+
+Or manually add to `~/.claude/settings.json`:
 
 ```json
 {
