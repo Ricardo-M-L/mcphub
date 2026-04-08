@@ -199,7 +199,7 @@ func handleSearch(args json.RawMessage, client *registry.Client) interface{} {
 		params.Limit = 10
 	}
 
-	entries, err := client.Search(params.Query, params.Limit)
+	entries, err := client.SearchAll(params.Query, params.Limit)
 	if err != nil {
 		return toolError("search failed: " + err.Error())
 	}
