@@ -1,6 +1,16 @@
 # Contributing to MCP Hub
 
-Thank you for your interest in contributing to MCP Hub! This document provides guidelines to help you get started.
+Thank you for your interest in contributing to MCP Hub! Please read this guide carefully before submitting.
+
+## Rules
+
+1. **Issue first** — Open an issue before working on any non-trivial change. PRs without a linked issue may be closed.
+2. **One PR, one thing** — Keep PRs focused. Don't mix bug fixes with features.
+3. **CI must pass** — All checks (build, test, lint) must be green before review.
+4. **PR title must follow conventional commits** — `feat:`, `fix:`, `docs:`, etc.
+5. **No AI-generated walls of text** — Write concise, human descriptions.
+6. **Maintainer approval required** — All PRs require at least 1 approval from a maintainer before merging.
+7. **No direct pushes to master** — All changes go through PRs.
 
 ## Getting Started
 
@@ -13,7 +23,7 @@ Thank you for your interest in contributing to MCP Hub! This document provides g
 ### Setup
 
 ```bash
-git clone https://github.com/mcphub/mcphub.git
+git clone https://github.com/Ricardo-M-L/mcphub.git
 cd mcphub
 make build
 make test
@@ -22,38 +32,41 @@ make test
 ### Running Locally
 
 ```bash
-# Build and run
 go run ./cmd/mcphub search filesystem
-
-# Or build first
-make build
-./bin/mcphub search filesystem
 ```
 
 ## Types of Contributions
 
 ### Bug Fixes
 
-- Check the [issue tracker](https://github.com/mcphub/mcphub/issues) for known bugs
+- Check the [issue tracker](https://github.com/Ricardo-M-L/mcphub/issues) for known bugs
 - Look for issues labeled `good first issue` or `help wanted`
-- Open an issue before starting work on complex fixes
+- **Open an issue first** describing the bug and your fix approach
 
 ### New Features
 
-- Open a feature request issue first to discuss the design
-- Keep PRs focused on a single feature
+- **Open a feature request issue first** to discuss the design
+- Wait for maintainer approval before starting work
 - Include tests for new functionality
 
 ### Documentation
 
 - Fix typos, improve examples, add missing docs
-- Documentation PRs don't need an issue
+- Small doc fixes don't need an issue
 
 ## Pull Request Process
 
-### 1. Branch Naming
+### 1. Fork & Branch
 
-Use conventional prefixes:
+```bash
+# Fork the repo on GitHub, then:
+git clone https://github.com/YOUR-USERNAME/mcphub.git
+cd mcphub
+git remote add upstream https://github.com/Ricardo-M-L/mcphub.git
+git checkout -b feat/your-feature
+```
+
+### 2. Branch Naming
 
 ```
 feat/add-docker-support
@@ -63,9 +76,7 @@ refactor/simplify-installer-interface
 test/add-config-manager-tests
 ```
 
-### 2. Commit Messages
-
-Follow [Conventional Commits](https://www.conventionalcommits.org/):
+### 3. PR Title (Conventional Commits)
 
 ```
 feat: add Docker-based MCP server installer
@@ -74,68 +85,73 @@ docs: add troubleshooting section to README
 test: add integration tests for npm installer
 ```
 
-### 3. Code Style
+**Invalid titles will be automatically rejected by CI.**
+
+### 4. PR Description
+
+Use the PR template. Must include:
+
+- **What** — Brief description of the change
+- **Why** — The problem this solves
+- **How** — Key implementation decisions
+- **Testing** — How you verified it works
+- **Closes #** — Link to the issue
+
+### 5. Code Requirements
 
 - Run `make fmt` before committing
-- Run `make lint` to check for issues
-- Follow Go conventions (effective Go, Go Code Review Comments)
+- Run `make test` — all tests must pass
+- Run `go vet ./...` — no warnings
+- Add tests for new code
 - Keep functions focused and short
-- Use meaningful variable names
-- Add comments only where the logic isn't self-evident
+- Comments only where logic isn't self-evident
 
-### 4. Testing
+### 6. Review Process
 
-- Add unit tests for new code in `*_test.go` files
-- Use table-driven tests where appropriate
-- Mock external dependencies (HTTP calls, file system)
-- Run `make test` before submitting
+1. CI checks run automatically (build, test, lint, PR title)
+2. Maintainer reviews the code
+3. Address review feedback with new commits (don't force-push during review)
+4. Maintainer approves and merges
 
-### 5. PR Description
+**Timeline:** Expect 1-3 days for initial review. Complex PRs may take longer.
 
-Use this template:
+### 7. What Will Get Your PR Closed
 
-```markdown
-## What
+- No linked issue (for non-trivial changes)
+- AI-generated spam descriptions
+- Unrelated changes mixed in
+- Failing CI
+- No response to review feedback for 7 days
+- Changes that break existing functionality without tests
 
-Brief description of the change.
-
-## Why
-
-The problem this solves or feature this adds.
-
-## How
-
-Key implementation decisions.
-
-## Testing
-
-How you verified this works.
-```
-
-## Architecture Overview
+## Architecture
 
 ```
-cmd/mcphub/main.go          # Entrypoint
-internal/cli/                # Cobra commands (search, install, list, remove)
-internal/registry/client.go  # HTTP client for MCP Registry API
+cmd/mcphub/main.go          # CLI entrypoint
+mcp/server.go               # MCP server mode (stdio)
+internal/cli/                # Cobra commands
+internal/registry/client.go  # MCP Registry API client
+internal/registry/github.go  # GitHub search fallback
 internal/installer/          # Package installation logic
-internal/config/manager.go   # MCP client config read/write
-internal/store/store.go      # Local lockfile management
-internal/ui/                 # Terminal output formatting
-internal/platform/paths.go   # OS-specific file paths
+internal/config/manager.go   # MCP client config management
+internal/store/store.go      # Local lockfile
+internal/ui/                 # Terminal output
+internal/platform/paths.go   # OS-specific paths
+server/                      # Registry API server
+web/                         # Next.js Web UI
 ```
 
-### Key Design Principles
+### Design Principles
 
-1. **Config safety** - Always backup before modifying client configs
-2. **Zero infrastructure** - CLI works by querying the upstream registry directly
-3. **Single binary** - No runtime dependencies for the CLI
-4. **Preserve user config** - Use `map[string]interface{}` when reading configs to keep unknown fields
+1. **Config safety** — Always backup before modifying client configs
+2. **Zero infrastructure** — CLI queries upstream registry directly
+3. **Single binary** — No runtime dependencies
+4. **Preserve user config** — Use `map[string]interface{}` to keep unknown fields
 
 ## Code of Conduct
 
-This project follows the [Contributor Covenant Code of Conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code.
+Be respectful. No harassment, spam, or bad-faith contributions. Violations result in a permanent ban.
 
 ## Questions?
 
-Open a [Discussion](https://github.com/mcphub/mcphub/discussions) or file an issue.
+Open a [Discussion](https://github.com/Ricardo-M-L/mcphub/discussions) or file an issue.

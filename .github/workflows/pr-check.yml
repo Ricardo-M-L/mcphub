@@ -1,0 +1,51 @@
+name: PR Check
+
+on:
+  pull_request:
+    branches: [master]
+
+jobs:
+  build-and-test:
+    name: Build & Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.23"
+
+      - name: Build CLI
+        run: go build -o bin/mcphub ./cmd/mcphub
+
+      - name: Build MCP Server
+        run: go build -o bin/mcphub-mcp ./mcp
+
+      - name: Build Registry Server
+        run: go build -o bin/mcphub-server ./server
+
+      - name: Run Tests
+        run: go test ./... -v -race
+
+      - name: Vet
+        run: go vet ./...
+
+  pr-lint:
+    name: PR Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check PR title format
+        uses: amannn/action-semantic-pull-request@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          types: |
+            feat
+            fix
+            docs
+            chore
+            refactor
+            test
+            perf
