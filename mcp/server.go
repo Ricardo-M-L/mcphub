@@ -8,6 +8,7 @@ import (
 	"os"
 
 	"github.com/Ricardo-M-L/mcphub/internal/config"
+	"github.com/Ricardo-M-L/mcphub/internal/health"
 	"github.com/Ricardo-M-L/mcphub/internal/installer"
 	"github.com/Ricardo-M-L/mcphub/internal/registry"
 	"github.com/Ricardo-M-L/mcphub/internal/store"
@@ -107,6 +108,19 @@ var tools = []map[string]interface{}{
 			"required": []string{"name"},
 		},
 	},
+	{
+		"name":        "doctor",
+		"description": "Diagnose MCP server health and configuration issues. Checks all installed servers for connectivity, validates client configs, and reports problems with fix suggestions.",
+		"inputSchema": map[string]interface{}{
+			"type": "object",
+			"properties": map[string]interface{}{
+				"server": map[string]interface{}{
+					"type":        "string",
+					"description": "Optional: check a specific server only. If empty, checks all servers.",
+				},
+			},
+		},
+	},
 }
 
 func main() {
@@ -184,6 +198,8 @@ func handleToolCall(params json.RawMessage, client *registry.Client) interface{}
 		return handleRemove(call.Arguments)
 	case "server_info":
 		return handleInfo(call.Arguments, client)
+	case "doctor":
+		return handleDoctor(call.Arguments)
 	default:
 		return toolError("unknown tool: " + call.Name)
 	}
@@ -369,6 +385,96 @@ func handleInfo(args json.RawMessage, client *registry.Client) interface{} {
 
 	text, _ := json.MarshalIndent(entry.Server, "", "  ")
 	return toolResult(string(text))
+}
+
+func handleDoctor(args json.RawMessage) interface{} {
+	var params struct {
+		Server string `json:"server"`
+	}
+	json.Unmarshal(args, &params)
+
+	var lines []string
+
+	// Check client configs
+	lines = append(lines, "=== Client Configuration ===")
+	for _, c := range config.KnownClients() {
+		issues := health.CheckClientConfig(c.Name, c.Path, c.Key)
+		if len(issues) == 0 {
+			lines = append(lines, fmt.Sprintf("✓ %s: OK", c.Name))
+		} else {
+			for _, issue := range issues {
+				lines = append(lines, fmt.Sprintf("✗ %s: %s → %s", c.Name, issue.Message, issue.Suggestion))
+			}
+		}
+	}
+
+	// Check installed servers
+	lf, err := store.Load()
+	if err != nil {
+		return toolError("failed to load lockfile: " + err.Error())
+	}
+
+	lines = append(lines, "", "=== Installed Servers ===")
+
+	if len(lf.Packages) == 0 {
+		lines = append(lines, "No servers installed.")
+	}
+
+	for name, pkg := range lf.Packages {
+		if params.Server != "" && name != params.Server && pkg.Name != params.Server {
+			continue
+		}
+
+		var report *health.Report
+		if pkg.Transport.Type == "streamable-http" || pkg.Transport.Type == "sse" {
+			report = health.CheckRemoteServer(name, pkg.Transport.URL)
+		} else {
+			command := "npx"
+			cmdArgs := []string{"-y", pkg.Identifier}
+			if pkg.RuntimeHint == "uvx" {
+				command = "uvx"
+				cmdArgs = []string{pkg.Identifier}
+			}
+			if pkg.Identifier != "" {
+				report = health.CheckStdioServer(name, command, cmdArgs, pkg.EnvVars)
+			} else {
+				report = &health.Report{
+					Name:   name,
+					Status: health.StatusWarning,
+					Issues: []health.Issue{{
+						Severity:   health.StatusWarning,
+						Message:    "Cannot determine how to start this server",
+						Suggestion: "Re-install with: mcphub install " + name,
+					}},
+				}
+			}
+		}
+
+		status := "✓"
+		if report.Status == health.StatusError {
+			status = "✗"
+		} else if report.Status == health.StatusWarning {
+			status = "!"
+		}
+		lines = append(lines, fmt.Sprintf("%s %s [%s] (%s)", status, name, report.Transport, report.Duration.Round(1e6)))
+		for _, issue := range report.Issues {
+			if issue.Suggestion != "" {
+				lines = append(lines, fmt.Sprintf("  %s → %s", issue.Message, issue.Suggestion))
+			} else {
+				lines = append(lines, fmt.Sprintf("  %s", issue.Message))
+			}
+		}
+	}
+
+	return toolResult(fmt.Sprintf("%s", joinLines(lines)))
+}
+
+func joinLines(lines []string) string {
+	result := ""
+	for _, l := range lines {
+		result += l + "\n"
+	}
+	return result
 }
 
 func toolResult(text string) map[string]interface{} {
