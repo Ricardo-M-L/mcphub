@@ -1,15 +1,28 @@
+<div align="center">
+
 # MCP Hub
 
-The package manager for [Model Context Protocol](https://modelcontextprotocol.io) servers.
+**The package manager for [Model Context Protocol](https://modelcontextprotocol.io) servers.**
 
-Search, install, and manage MCP servers with a single command. Auto-configures Claude Desktop, Cursor, Claude Code, and other MCP clients.
+Search, install, and manage MCP servers with a single command.
+
+[![Go](https://img.shields.io/badge/Go-1.25-00ADD8?logo=go)](https://go.dev)
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
+[![npm](https://img.shields.io/npm/v/@ricardo.m.lu/mcphub?color=CB3837&logo=npm)](https://www.npmjs.com/package/@ricardo.m.lu/mcphub)
+[![Release](https://img.shields.io/github/v/release/Ricardo-M-L/mcphub?color=success)](https://github.com/Ricardo-M-L/mcphub/releases)
+[![CI](https://github.com/Ricardo-M-L/mcphub/actions/workflows/ci.yml/badge.svg)](https://github.com/Ricardo-M-L/mcphub/actions)
 
 ```bash
 mcphub search filesystem
 mcphub install io.github.user/server-filesystem
+mcphub doctor   # ← diagnose broken MCP servers
 ```
 
 ![mcphub demo](demo.gif)
+
+**Works with:** Claude Code · Claude Desktop · Cursor
+
+</div>
 
 ## Features
 
