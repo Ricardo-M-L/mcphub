@@ -9,6 +9,8 @@ mcphub search filesystem
 mcphub install io.github.user/server-filesystem
 ```
 
+![mcphub demo](demo.gif)
+
 ## Features
 
 - **One-command install** - Install any MCP server and auto-configure your clients
