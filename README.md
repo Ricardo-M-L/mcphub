@@ -449,10 +449,10 @@ echo '{"jsonrpc":"2.0","id":1,"method":"tools/list"}' | ./bin/mcphub-mcp
 - [x] CI/CD with GitHub Actions + cross-platform release builds
 - [x] 5 distribution methods: curl, Homebrew, npm, Go, source
 - [x] 14 unit tests passing
-- [ ] Claude Code auto-detection support
-- [ ] SDK auto-generation from MCP tool schemas
-- [ ] Server health monitoring
-- [ ] Community ratings and reviews
+- [x] Claude Code & Windsurf auto-detection support
+- [x] SDK auto-generation from MCP tool schemas (TypeScript & Python)
+- [x] Server health monitoring (mcphub doctor)
+- [x] Community ratings and reviews (mcphub rate & ratings)
 
 ---
 

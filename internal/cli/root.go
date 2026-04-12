@@ -30,6 +30,9 @@ func init() {
 	rootCmd.AddCommand(publishCmd)
 	rootCmd.AddCommand(initCmd)
 	rootCmd.AddCommand(doctorCmd)
+	rootCmd.AddCommand(sdkgenCmd)
+	rootCmd.AddCommand(rateCmd)
+	rootCmd.AddCommand(ratingsCmd)
 	rootCmd.AddCommand(versionCmd)
 }
 

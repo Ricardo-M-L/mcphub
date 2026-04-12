@@ -39,7 +39,13 @@ func CursorConfigPath() string {
 // ClaudeCodeConfigPath returns the Claude Code settings path.
 func ClaudeCodeConfigPath() string {
 	home, _ := os.UserHomeDir()
-	return filepath.Join(home, ".claude", "settings.json")
+	return filepath.Join(home, ".claude.json")
+}
+
+// WindsurfConfigPath returns the Windsurf MCP config path.
+func WindsurfConfigPath() string {
+	home, _ := os.UserHomeDir()
+	return filepath.Join(home, ".windsurf", "mcp.json")
 }
 
 // DetectInstalledClients returns a list of MCP client names that have config files present.

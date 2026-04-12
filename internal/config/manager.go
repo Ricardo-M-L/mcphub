@@ -21,6 +21,8 @@ func KnownClients() []ClientConfig {
 	return []ClientConfig{
 		{Name: "claude-desktop", Path: platform.ClaudeDesktopConfigPath(), Key: "mcpServers"},
 		{Name: "cursor", Path: platform.CursorConfigPath(), Key: "mcpServers"},
+		{Name: "claude-code", Path: platform.ClaudeCodeConfigPath(), Key: "mcpServers"},
+		{Name: "windsurf", Path: platform.WindsurfConfigPath(), Key: "mcpServers"},
 	}
 }
 
