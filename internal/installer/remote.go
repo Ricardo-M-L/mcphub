@@ -1,6 +1,8 @@
 package installer
 
 import (
+	"fmt"
+
 	"github.com/Ricardo-M-L/mcphub/internal/config"
 	"github.com/Ricardo-M-L/mcphub/internal/registry"
 )
@@ -10,7 +12,7 @@ import (
 type RemoteInstaller struct{}
 
 func (r *RemoteInstaller) Install(pkg registry.Package, envVars map[string]string) (*Result, error) {
-	return nil, nil
+	return nil, fmt.Errorf("RemoteInstaller.Install should not be called directly - use InstallRemote instead")
 }
 
 // InstallRemote configures a remote MCP server by URL.
